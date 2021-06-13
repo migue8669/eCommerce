@@ -1,6 +1,7 @@
 package co.com.ias.eComerce.users.application.services;
 import co.com.ias.eComerce.commons.NonEmptyString;
 import co.com.ias.eComerce.users.application.domain.Employe;
+import co.com.ias.eComerce.users.application.domain.IdentificationNumber;
 import co.com.ias.eComerce.users.application.errors.EmployeAlreadyExistsError;
 import co.com.ias.eComerce.users.application.model.CreateEmployeRequest;
 import co.com.ias.eComerce.users.application.model.CreateEmployeResponse;
@@ -25,9 +26,10 @@ public class CreateEmployeServiceTest {
         CreateEmployeService createEmployeService = new CreateEmployeService(repository);
         final String idNumber = "12345678";
         CreateEmployeRequest request = new CreateEmployeRequest(
+                //idNumber,
+
                 "name",
                 "lastName",
-                idNumber,
                 "CC"
         );
 
@@ -38,7 +40,7 @@ public class CreateEmployeServiceTest {
         assertAll(
                 () -> assertDoesNotThrow(() -> createEmployeService.execute(request)),
                 () -> assertEquals(
-                        response.getEmploye().getIdentificationNumber().getValue(),
+                        response.getEmploye().getIdNumber().getValue(),
                         idNumber
                 ),
                 () -> Mockito.verify(repository, Mockito.times(2))
@@ -50,10 +52,11 @@ public class CreateEmployeServiceTest {
     @Test
     void ifStudentExistsItThrowsAnException() {
         Employe employe = new Employe(
-                new NonEmptyString("name"),
-                new NonEmptyString("lastName"),
-                IdentificationType.CC.CC,
-                new IdentificationNumber("12345678")
+                new IdentificationNumber("12345678"),
+
+        new NonEmptyString("name"),
+                new NonEmptyString("lastName")
+            //    IdentificationType.CC.CC,
         );
 
         EmployeRepository repository = Mockito.mock(EmployeRepository.class);
@@ -65,8 +68,8 @@ public class CreateEmployeServiceTest {
         CreateEmployeRequest request = new CreateEmployeRequest(
                 employe.getName().getValue(),
                 employe.getLastName().getValue(),
-                employe.getIdentificationNumber().getValue(),
-                employe.getIdentificationType().name()
+                employe.getIdNumber().getValue()
+               // employe.getIdentificationType().name()
         );
 
         assertAll(

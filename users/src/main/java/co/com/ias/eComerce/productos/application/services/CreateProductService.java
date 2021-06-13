@@ -8,7 +8,6 @@ import co.com.ias.eComerce.productos.application.model.CreateProductResponse;
 import co.com.ias.eComerce.productos.application.ports.in.CreateProductUseCase;
 import co.com.ias.eComerce.productos.application.ports.out.ProductsRepository;
 import co.com.ias.eComerce.users.application.errors.InputDataError;
-import co.com.ias.eComerce.users.application.model.CreateEmployeRequest;
 import io.vavr.control.Validation;
 
 import java.util.Optional;

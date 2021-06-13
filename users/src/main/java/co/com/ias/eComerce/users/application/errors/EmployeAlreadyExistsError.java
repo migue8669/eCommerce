@@ -2,20 +2,22 @@ package co.com.ias.eComerce.users.application.errors;
 
 import co.com.ias.eComerce.commons.errors.ApplicationError;
 import co.com.ias.eComerce.commons.errors.HttpStatusCode;
+import co.com.ias.eComerce.users.application.domain.IdentificationNumber;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class EmployeAlreadyExistsError extends ApplicationError {
     private final IdentificationNumber idNumber;
 
-    public EmployeAlreadyExistsError(IdentificationNumber idNumber) {
-        this.idNumber = idNumber;
+    public EmployeAlreadyExistsError(IdentificationNumber identificationNumber) {
+        this.idNumber = identificationNumber;
     }
 
     @Override
     public String getMessage() {
 
-        return "The employe with id number: " + idNumber.getValue() + " already exists.";
+        return "The employe with id number: " + idNumber + " already exists.";
     }
 
     @Override

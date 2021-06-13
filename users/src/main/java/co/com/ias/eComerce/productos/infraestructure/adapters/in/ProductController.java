@@ -1,15 +1,14 @@
 package co.com.ias.eComerce.productos.infraestructure.adapters.in;
 
+import co.com.ias.eComerce.productos.application.model.CreateProductRequest;
 import co.com.ias.eComerce.productos.application.model.ListProductsRequest;
 import co.com.ias.eComerce.productos.application.ports.in.CreateProductUseCase;
 import co.com.ias.eComerce.productos.application.ports.in.ListProductsUseCase;
-import co.com.ias.eComerce.users.infraestructure.commons.UseCaseHttpExecutor;
+import co.com.ias.eComerce.productos.infraestructure.commons.UseCaseHttpExecutor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/products")
@@ -25,16 +24,25 @@ public class ProductController {
         this.listProductsUseCase = listProductsUseCase;
     }
     @GetMapping
-    public ResponseEntity listProductHandler(@RequestParam(name = "limit",defaultValue="10") String limit,
-                                             @RequestParam(name = "limit",defaultValue="0") String skip){
-
+    public ResponseEntity listEmployeHandler(
+            @RequestParam(name = "limit", defaultValue = "10") String limit,
+            @RequestParam(name = "skip", defaultValue = "0") String skip
+    ) {
         Integer limitInt = Integer.parseInt(limit, 10);
         Integer skipInt = Integer.parseInt(skip, 10);
         return useCaseHttpExecutor.executeUseCase(
                 listProductsUseCase,
-                new ListProductsRequest(limitInt, skipInt));
-
+                new ListProductsRequest(limitInt, skipInt)
+        );
     }
 
-    }
 
+    @PostMapping
+    public ResponseEntity createProductHandler(
+            @RequestBody CreateProductRequest request
+    ) {
+        return useCaseHttpExecutor.executeUseCase(
+                createProductUseCase,
+                request
+        );
+    }}

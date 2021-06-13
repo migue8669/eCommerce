@@ -1,4 +1,4 @@
-package co.com.ias.eComerce.users.infraestructure.configuration;
+package co.com.ias.eComerce.productos.infraestructure.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;

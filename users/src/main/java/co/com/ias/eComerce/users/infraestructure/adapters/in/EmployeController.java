@@ -5,17 +5,17 @@ import co.com.ias.eComerce.users.application.model.ListEmployeRequest;
 import co.com.ias.eComerce.users.application.ports.in.CreateEmployeUseCase;
 import co.com.ias.eComerce.users.application.ports.in.ListEmployeUseCase;
 import co.com.ias.eComerce.users.infraestructure.commons.UseCaseHttpExecutor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+@RestController
+@RequestMapping(path = "/employes")
 public class EmployeController {
     private final UseCaseHttpExecutor useCaseHttpExecutor;
     private final CreateEmployeUseCase createEmployeUseCase;
     private final ListEmployeUseCase listEmployeUseCase;
-
+    @Autowired
     public EmployeController(UseCaseHttpExecutor useCaseHttpExecutor, CreateEmployeUseCase createEmployeUseCase, ListEmployeUseCase listEmployeUseCase) {
         this.useCaseHttpExecutor = useCaseHttpExecutor;
         this.createEmployeUseCase = createEmployeUseCase;
@@ -23,7 +23,7 @@ public class EmployeController {
     }
 
     @GetMapping
-    public ResponseEntity listStudentsHandler(
+    public ResponseEntity listEmployeHandler(
             @RequestParam(name = "limit", defaultValue = "10") String limit,
             @RequestParam(name = "skip", defaultValue = "0") String skip
     ) {
@@ -37,7 +37,7 @@ public class EmployeController {
 
 
     @PostMapping
-    public ResponseEntity createStudentHandler(
+    public ResponseEntity createEmployeHandler(
             @RequestBody CreateEmployeRequest request
     ) {
         return useCaseHttpExecutor.executeUseCase(

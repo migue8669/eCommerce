@@ -6,8 +6,10 @@ import co.com.ias.eComerce.commons.operation.ApplicationResponse;
 import co.com.ias.eComerce.commons.operation.ApplicationUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
+@Component
 
 public class UseCaseHttpExecutor {
 

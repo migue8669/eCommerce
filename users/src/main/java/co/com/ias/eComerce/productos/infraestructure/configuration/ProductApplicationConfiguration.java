@@ -7,13 +7,15 @@ import co.com.ias.eComerce.productos.application.services.CreateProductService;
 import co.com.ias.eComerce.productos.application.services.ListProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class ProductApplicationConfiguration {
     @Bean
-    public CreateProductUseCase createStudentServiceBean(
-            ProductsRepository studentsRepository
+    public CreateProductUseCase createProductServiceBean(
+            ProductsRepository productsRepository
     ) {
-        return new CreateProductService(studentsRepository);
+        return new CreateProductService(productsRepository);
     }
 
     @Bean

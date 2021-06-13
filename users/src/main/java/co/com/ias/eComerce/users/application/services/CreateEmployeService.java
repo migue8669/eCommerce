@@ -1,6 +1,7 @@
 package co.com.ias.eComerce.users.application.services;
 
 import co.com.ias.eComerce.users.application.domain.Employe;
+import co.com.ias.eComerce.users.application.domain.IdentificationNumber;
 import co.com.ias.eComerce.users.application.errors.EmployeAlreadyExistsError;
 import co.com.ias.eComerce.users.application.errors.InputDataError;
 import co.com.ias.eComerce.users.application.model.CreateEmployeRequest;
@@ -8,6 +9,7 @@ import co.com.ias.eComerce.users.application.model.CreateEmployeResponse;
 import co.com.ias.eComerce.users.application.ports.in.CreateEmployeUseCase;
 import co.com.ias.eComerce.users.application.ports.out.EmployeRepository;
 import co.com.ias.eComerce.commons.NonEmptyString;
+import io.vavr.control.Validation;
 
 import java.util.Optional;
 
@@ -20,36 +22,28 @@ public class CreateEmployeService implements CreateEmployeUseCase {
 
 
     public  CreateEmployeResponse execute(CreateEmployeRequest request) {
-        Employe employe = validateInput(request);
+        Validation<InputDataError, Employe> validation = Employe.parseEmploye(
+                request.getName(),
+                request.getLastName(),
+//                request.getIdType(),
+                request.getIdNumber()
+        );
 
-         identificationNumber = employe.getIdentificationNumber();
-        Optional<Employe> employeById = repository.getEmployeById(identificationNumber);
+        if(validation.isInvalid()) {
+            throw validation.getError();
+        }
 
-        if (employeById.isPresent()) {
+        final Employe employe = validation.get();
+
+        IdentificationNumber identificationNumber = employe.getIdNumber();
+        Optional<Employe> studentById = repository.getEmployeById(identificationNumber);
+
+        if (studentById.isPresent()) {
             throw new EmployeAlreadyExistsError(identificationNumber);
         }
 
         repository.storeEmploye(employe);
 
         return new CreateEmployeResponse(employe);
-    }
-
-
-    private Employe validateInput(CreateEmployeRequest request) {
-        try {
-            NonEmptyString name = new NonEmptyString(request.getName());
-            NonEmptyString lastName = new NonEmptyString(request.getLastName());
-            IdentificationType identificationType = IdentificationType.valueOf(request.getIdType());
-            IdentificationNumber identificationNumber = new IdentificationNumber(request.getIdNumber());
-
-            return new Employe(
-                    name,
-                    lastName,
-                    identificationType,
-                    identificationNumber
-            );
-        } catch (RuntimeException e) {
-            throw new InputDataError(e.getMessage());
-        }
     }
 }

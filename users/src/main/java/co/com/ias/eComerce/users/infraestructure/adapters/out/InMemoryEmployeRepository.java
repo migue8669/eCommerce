@@ -1,6 +1,7 @@
 package co.com.ias.eComerce.users.infraestructure.adapters.out;
 
 import co.com.ias.eComerce.users.application.domain.Employe;
+import co.com.ias.eComerce.users.application.domain.IdentificationNumber;
 import co.com.ias.eComerce.users.application.ports.out.EmployeRepository;
 
 import java.util.Collection;
@@ -19,7 +20,7 @@ public class InMemoryEmployeRepository implements EmployeRepository {
 
     @Override
     public void storeEmploye(Employe employe) {
-        database.put(employe.getIdentificationNumber(), employe);
+        database.put(employe.getIdNumber(), employe);
     }
 
     @Override

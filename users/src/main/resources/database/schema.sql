@@ -12,7 +12,7 @@ CREATE TABLE PRODUCT (
         BASEPRICE varchar not null,
             TAXRATE varchar not null,
                 PRODUCTSTATUS varchar not null,
-                    InventoryQuantity varchar not null
+                    INVENTORYQUANTITY varchar not null
 
 
 
