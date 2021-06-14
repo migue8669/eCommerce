@@ -24,7 +24,7 @@ public class ProductController {
         this.listProductsUseCase = listProductsUseCase;
     }
     @GetMapping
-    public ResponseEntity listEmployeHandler(
+    public ResponseEntity listProductHandler(
             @RequestParam(name = "limit", defaultValue = "10") String limit,
             @RequestParam(name = "skip", defaultValue = "0") String skip
     ) {

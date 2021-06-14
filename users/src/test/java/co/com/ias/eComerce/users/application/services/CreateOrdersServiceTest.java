@@ -13,10 +13,10 @@ import org.mockito.Mockito;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-public class CreateEmployeServiceTest {
+public class CreateOrdersServiceTest {
 
     @Test
-    void ifStudentsDoesNotExistsItGetsCreated() {
+    void ifOrderDoesNotExistsItGetsCreated() {
         // arrange
         EmployeRepository repository = Mockito.mock(EmployeRepository.class);
         Mockito.when(repository.getEmployeById(ArgumentMatchers.any(IdentificationNumber.class)))
@@ -50,7 +50,7 @@ public class CreateEmployeServiceTest {
 
 
     @Test
-    void ifStudentExistsItThrowsAnException() {
+    void ifOrderExistsItThrowsAnException() {
         Employe employe = new Employe(
                 new IdentificationNumber("12345678"),
 
